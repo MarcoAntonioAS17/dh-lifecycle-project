@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import imagenFondo from '../assets/images/mandalorian.jpg';
 import GenresInDb from './GenresInDb';
 import ContentRowMovies from './ContentRowMovies';
+import ContentRowTopUser from './ContentRowTopUser';
+
 function ContentRowTop(){
+	const [usuario, setUsuario] = useState({});
+
+	useEffect(()=> {
+        fetch('http://localhost:3003/api/users')
+        .then(response => response.json())
+        .then(data => {
+			fetch('http://localhost:3003/api/users/'+ data.lastUser )
+			.then(resp => resp.json())
+			.then(datos => setUsuario(datos))
+		});
+    },[]);
+
     return(
         <React.Fragment>
 				{/*<!-- Content Row Top -->*/}
@@ -38,7 +52,8 @@ function ContentRowTop(){
 						{/*<!-- Genres in DB -->*/}
 						<GenresInDb />
 
-						{/*<!--End Genres In Db-->*/}		
+						{/*<!--End Genres In Db-->*/}
+						<ContentRowTopUser {...usuario} />		
 					</div>
 				</div>
 				{/*<!--End Content Row Top-->*/}

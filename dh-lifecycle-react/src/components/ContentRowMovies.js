@@ -1,49 +1,43 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import SmallCard from './SmallCard';
 
 let productInDataBase = {
     color:   "primary",
-    titulo: "Movies in Data Base",
+    titulo: "Total de usuarios",
     valor: 21,
-    icono: "fas fa-film",
+    icono: "fas fa-user",
 }
 
 let amount ={
     color:   "success",
-    titulo: "Total awards",
+    titulo: "Total de categorías",
     valor: 79,
-    icono: "fas fa-award",
+    icono: "fas fa-tag",
 }
 
 let user = {
     color:   "warning",
-    titulo: "Actors quantity",
+    titulo: "Total de sub-categorías",
     valor: 49,
-    icono: "fas fa-user",
+    icono: "fas fa-tags",
 }
 
 let cardProps = [productInDataBase,amount,user];
 
 
-function ContentRowTop(){
-    const [productos, setProductos] = useState({});
-
-    useEffect(()=> {
-        fetch('http://localhost:3003/api/products')
-        .then(response => response.json())
-        .then(data => setProductos(data));
-    },[]);
+function ContentRowTop(props){
+    const [totalProductos] = useState(props.totalProductos);
 
     return (
         <React.Fragment>
         {/*<!-- Content Row -->*/}
         <div className="row">
-            <SmallCard color="success" titulo="Total productos" valor={productos.count} icono="fas fa-award"/>
             {
                 cardProps.map((producto,index)=>{
                     return <SmallCard  {...producto}  key= {index}/>
                 })
-            }      
+            }
+            <SmallCard color="success" titulo="Total productos" valor={totalProductos} icono="fas fa-box-open"/>
         </div>
         </React.Fragment>
     )

@@ -1,57 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Genre  from './Genre';
 
+function GenresInDb() {
+    const [genresList, setGenresList] = useState([]);
+    const [cardBodyClass, setCardBodyClass] = useState("card-body");
 
-class GenresInDb extends React.Component {
-
-    constructor() {
-        super()
-        this.state = {
-            genresList: [],
-            cardBodyClass: "card-body"
-        }
-    this.cardBody = React.createRef()
-    }
-
-    componentDidMount() {
-        fetch('http://localhost:3001/api/genres')
-        .then(response => response.json())
-        .then(res => {
-            this.setState({ genresList: res.data})
-        })
-    }
-
-    handleMouseOver() {
+    const handleMouseOver = (e) => {
         // manipular el fondo del card con los generos
-        let className  = this.state.cardBodyClass
+        let className  = cardBodyClass
         if(className.indexOf("bg-secondary") >= 0) className = "card-body";
         else className += " bg-secondary";
-        this.setState({ cardBodyClass: className })
+        setCardBodyClass(className);
     }
 
-    render() {
-        return (
-        <React.Fragment>
-                {/*<!-- Categories in DB -->*/}
-                <div className="col-lg-6 mb-4">						
-                    <div className="card shadow mb-4">
-                        <div className="card-header py-3">
-                            <h6 className="m-0 font-weight-bold text-gray-800" onMouseOver={(e) => { this.handleMouseOver() }}>Genres in Data Base</h6>
-                        </div>
-                        <div className={this.state.cardBodyClass}>
-                            <div className="row">
-                                {
-                                    this.state.genresList.map((genre)=>{
-                                        return  <Genre  {...genre}  key={genre.id} />
-                                    })
-                                }
-                            </div>
+    
+    return (
+    <React.Fragment>
+            {/*<!-- Categories in DB -->*/}
+            <div className="col-lg-6 mb-4">						
+                <div className="card shadow mb-4">
+                    <div className="card-header py-3">
+                        <h6 className="m-0 font-weight-bold text-gray-800" onMouseOver={ event => handleMouseOver() }>Genres in Data Base</h6>
+                    </div>
+                    <div className={cardBodyClass}>
+                        <div className="row">
+                            {
+                                genresList.map((genre)=>{
+                                    return  <Genre  {...genre}  key={genre.id} />
+                                })
+                            }
                         </div>
                     </div>
                 </div>
-        </React.Fragment>
-        )
-    }
+            </div>
+    </React.Fragment>
+    )
+    
 }
 
 export default GenresInDb;

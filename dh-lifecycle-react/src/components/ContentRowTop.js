@@ -1,8 +1,25 @@
-import React from 'react';
-import imagenFondo from '../assets/images/mandalorian.jpg';
-import GenresInDb from './GenresInDb';
+import React, { useEffect, useState } from 'react';
 import ContentRowMovies from './ContentRowMovies';
+import ProductosCategoria from './ProductosEnCategoria';
+import ProductosSubcategoria from './ProductosEnSubcategoria';
+import Productos from './Productos';
+import UltimoProducto from './UltimoProductoCreado';
+import UltimoUsuario from './UltimoUsuarioCreado';
+import Spinner from './Spiner';
+
 function ContentRowTop(){
+	const [fetchDonePro, setFetchDonePro] = useState(false);
+	const [productos, setProductos] = useState({});
+
+    useEffect(()=> {
+        fetch('http://localhost:3003/api/products')
+			.then(response => response.json())
+			.then(data => {
+				setProductos(data)
+				setFetchDonePro(true);
+			});
+    },[]);
+
     return(
         <React.Fragment>
 				{/*<!-- Content Row Top -->*/}
@@ -12,34 +29,26 @@ function ContentRowTop(){
 					</div>
 				
 					{/*<!-- Content Row Movies-->*/}
-					<ContentRowMovies />
+					{fetchDonePro ? <ContentRowMovies totalProductos={productos.count}/> : <Spinner/>}
 					{/*<!-- End movies in Data Base -->*/}
 					
 	
 					{/*<!-- Content Row Last Movie in Data Base -->*/}
 					<div className="row">
-						{/*<!-- Last Movie in DB -->*/}
-						<div className="col-lg-6 mb-4">
-							<div className="card shadow mb-4">
-								<div className="card-header py-3">
-									<h5 className="m-0 font-weight-bold text-gray-800">Last movie in Data Base</h5>
-								</div>
-								<div className="card-body">
-									<div className="text-center">
-										<img className="img-fluid px-3 px-sm-4 mt-3 mb-4" style={{width: 40 +'rem'}} src={imagenFondo} alt=" Star Wars - Mandalorian "/>
-									</div>
-									<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, consequatur explicabo officia inventore libero veritatis iure voluptate reiciendis a magnam, vitae, aperiam voluptatum non corporis quae dolorem culpa citationem ratione aperiam voluptatum non corporis ratione aperiam voluptatum quae dolorem culpa ratione aperiam voluptatum?</p>
-									<a className="btn btn-danger" target="_blank" rel="nofollow" href="/">View movie detail</a>
-								</div>
-							</div>
-						</div>
-						{/*<!-- End content row last movie in Data Base -->*/}
+						{/*<!-- Ultimo usuario creado-->*/}
+						<UltimoUsuario/>
 
-						{/*<!-- Genres in DB -->*/}
-						<GenresInDb />
+						{/*<!-- Ultimo producto creado -->*/}
+						{fetchDonePro ? <UltimoProducto lastProduct={productos.lastProduct}/> : <Spinner/>}
 
-						{/*<!--End Genres In Db-->*/}		
+						{/*<!-- Total de productos por categoria -->*/}
+						{fetchDonePro ? <ProductosCategoria countByCategory={productos.countByCategory}/> : <Spinner/>}
+						
+						{/*<!-- Total de productos por sub-categoria -->*/}
+						<ProductosSubcategoria />
+
 					</div>
+					{fetchDonePro ? <Productos productos={productos.products} />: <Spinner/>}	
 				</div>
 				{/*<!--End Content Row Top-->*/}
 

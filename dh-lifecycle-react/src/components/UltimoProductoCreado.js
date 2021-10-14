@@ -10,7 +10,7 @@ function UltimoProducto(props){
 	const [datos, setDatos] = useState([]);
 
 	useEffect( () => {
-		fetch(`http://localhost:3003/api/products/${ultimoProducto}`)
+		fetch(`https://rastyle-equipo11.herokuapp.com/api/products/${ultimoProducto}`)
 			.then(response => response.json())
 			.then(data => {
 

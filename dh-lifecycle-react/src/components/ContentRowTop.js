@@ -14,16 +14,16 @@ function ContentRowTop(){
 	const [usuario, setUsuario] = useState({});
 
     useEffect(()=> {
-        fetch('http://localhost:3003/api/products')
+        fetch('https://rastyle-equipo11.herokuapp.com/api/products')
 			.then(response => response.json())
 			.then(data => {
 				setProductos(data)
 				setFetchDonePro(true);
 		});
-		fetch('http://localhost:3003/api/users')
+		fetch('https://rastyle-equipo11.herokuapp.com/api/users')
 			.then(response => response.json())
 			.then(data => {
-				fetch('http://localhost:3003/api/users/'+ data.lastUser )
+				fetch('https://rastyle-equipo11.herokuapp.com/api/users/'+ data.lastUser )
 				.then(resp => resp.json())
 				.then(datos => setUsuario(datos))
 		});

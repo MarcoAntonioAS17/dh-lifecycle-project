@@ -5,7 +5,7 @@ function ProductosSubcategoria() {
     const [cardBodyClass, setCardBodyClass] = useState("card-body");
 
     useEffect( ()=> {
-        fetch(`http://localhost:3003/api/subcategory`)
+        fetch(`https://rastyle-equipo11.herokuapp.com/api/subcategory`)
 			.then(response => response.json())
 			.then(data => {
                 setSubcategory([

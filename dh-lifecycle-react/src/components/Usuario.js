@@ -11,7 +11,7 @@ class Movie extends React.Component {
 	}
 
 	componentDidMount() {
-		fetch('http://localhost:3003/api/users')
+		fetch('https://rastyle-equipo11.herokuapp.com/api/users')
 		.then(response => response.json())
 		.then(res => {
 				this.setState({ usuariosList: res.users})

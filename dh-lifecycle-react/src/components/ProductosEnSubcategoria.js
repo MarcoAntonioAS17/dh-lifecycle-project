@@ -12,6 +12,7 @@ function ProductosSubcategoria() {
                     {"name": "Tops", "data": data.tops},
                     {"name": "Sudaderas", "data": data.sudaderas},
                     {"name": "Zapatos", "data": data.zapatos},
+                    {"name": "Jeans", "data": data.jeans},
                     {"name": "Vestidos", "data": data.vestidos}
                 ])
             });

@@ -30,7 +30,7 @@ function ProductosCategoria(props) {
                         <div className="row">
                             {Categories.map((category, index) => {
                                 return (
-                                <div className="col-lg-6 mb-4">
+                                <div className="col-lg-6 mb-4" id={index}>
                                     <div className="card text-white bg-dark  shadow">
                                         <div className="card-body">
                                             {category.name}: {category.total} Productos 

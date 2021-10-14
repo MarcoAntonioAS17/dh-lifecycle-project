@@ -1,9 +1,21 @@
-import React, { useState } from 'react';
-import Genre  from './Genre';
+import React, { useEffect, useState } from 'react';
 
 function ProductosSubcategoria() {
-    const [genresList, setGenresList] = useState([]);
+    const [subcategory, setSubcategory] = useState([]);
     const [cardBodyClass, setCardBodyClass] = useState("card-body");
+
+    useEffect( ()=> {
+        fetch(`http://localhost:3003/api/subcategory`)
+			.then(response => response.json())
+			.then(data => {
+                setSubcategory([
+                    {"name": "Tops", "data": data.tops},
+                    {"name": "Sudaderas", "data": data.sudaderas},
+                    {"name": "Zapatos", "data": data.zapatos},
+                    {"name": "Vestidos", "data": data.vestidos}
+                ])
+            });
+    },[]);
 
     const handleMouseOver = (e) => {
         // manipular el fondo del card con los generos
@@ -27,8 +39,16 @@ function ProductosSubcategoria() {
                     <div className={cardBodyClass}>
                         <div className="row">
                             {
-                                genresList.map((genre)=>{
-                                    return  <Genre  {...genre}  key={genre.id} />
+                                subcategory.map((subcate, index) => {
+                                    return (
+                                    <div className="col-lg-6 mb-4" id={index}>
+                                        <div className="card text-white bg-dark  shadow">
+                                            <div className="card-body">
+                                                {subcate.name}: {subcate.data} Productos 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    )
                                 })
                             }
                         </div>
